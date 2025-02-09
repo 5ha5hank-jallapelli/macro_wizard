@@ -9,18 +9,20 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [data, setData] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/data`)
       .then(response => {
-      response.json().then(data => {
-        const items = data.data.flatMap(table => {
-          return table.items
+        response.json().then(data => {
+          const items = data.data.flatMap(table => {
+            return table.items
+          })
+          setData(items)
+          setIsLoading(false)
         })
-        setData(items)
       })
-    })
-  }, [])
+    }, [])
 
   const columns = [
     { field: 'item', headerName: 'Food Item', width: 253 },
@@ -77,6 +79,7 @@ export default function Home() {
               onProcessRowUpdateError={(error) => console.log(error)}
 
               onRowSelectionModelChange={handleRowSelection}
+              loading={ isLoading }
               slots={{
                 toolbar: GridToolbarQuickFilter,
               }}
