@@ -6,7 +6,7 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  height: 100%;
 }
 
 body {
@@ -15,6 +15,10 @@ body {
   font-family: 'Geist', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 15px 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 * {
@@ -29,3 +33,61 @@ a {
   text-decoration: none;
 }
 
+.btn-copy-cell:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+
+}
+.total-macros-cell:hover {
+  background-color: #f1ce07;
+}
+
+button {
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.MuiDataGrid-cell input {
+  padding: 0 10px !important;
+}
+
+.MuiDataGrid-row--editing {
+  box-shadow: none !important;
+  background-color: rgba(25, 118, 210, 0.08) !important;
+}
+
+.MuiDataGrid-row--editing .MuiDataGrid-cell {
+  background-color: unset !important;
+}
+
+.calculator-pane {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 320px;
+  background-color: white;
+  z-index: 20;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  transform: translateX(-100%);
+  -webkit-transition: transform 0.2s linear;
+  transition: transform 0.2s linear;
+}
+
+input {
+  padding: 6px 10px !important;
+  width: 100% !important;
+}
+
+.css-rizt0-MuiTypography-root, label {
+  font-size: 15px !important;
+}
+
+.MuiDataGrid-toolbarQuickFilter {
+  padding-inline: 10px !important;
+}
