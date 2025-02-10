@@ -91,3 +91,15 @@ input {
 .MuiDataGrid-toolbarQuickFilter {
   padding-inline: 10px !important;
 }
+
+.MuiRadioGroup-root .MuiButtonBase-root{
+  padding: 5px !important;
+}
+
+.css-6m95b7 {
+  all: unset;
+}
+
+.MuiRadioGroup-root .MuiTypography-root {
+  font-size: 15px !important;
+}
