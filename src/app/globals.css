@@ -19,6 +19,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 450 !important;
 }
 
 * {
@@ -102,4 +103,8 @@ input {
 
 .MuiRadioGroup-root .MuiTypography-root {
   font-size: 15px !important;
+}
+
+.fw-bold {
+  font-weight: 700 !important;
 }

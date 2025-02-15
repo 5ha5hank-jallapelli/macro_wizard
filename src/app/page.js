@@ -4,7 +4,9 @@ import Paper from '@mui/material/Paper';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import SelectedItemsTable from './components/SelectedItemsTable';
 import MacroCalculator from './components/MacroCalculator';
+import tableExport from '@/utils/tableExport';
 import { useEffect, useState } from "react";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function Home() {
   const [data, setData] = useState([])
@@ -22,7 +24,8 @@ export default function Home() {
           setIsLoading(false)
         })
       })
-    }, [])
+    }, []
+  )
 
   const columns = [
     { field: 'item', headerName: 'Food Item', width: 253 },
@@ -56,9 +59,19 @@ export default function Home() {
 
   return (
     <>
-      < MacroCalculator />
-      <div style={{ width: '1860px', overflow: 'auto', marginInline: 'auto'}}>
-        <div style={{ height: '38px', marginBottom: '5px' }}></div>
+      <MacroCalculator/>
+      <div style={{ width: '1862px', overflow: 'auto', marginInline: 'auto'}}>
+        <div style={{ height: '38px', marginBottom: '10px', display: 'flex', justifyContent: 'flex-end' }}>
+          <button
+            type='button'
+            title='Export Data'
+            style={{display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: '#10793F', color: 'white', padding: '1px 10px', border: 'none', borderRadius:'4px'}}
+            disabled={!selectedRows.length ? true : false}
+            onClick={() => tableExport()}>
+            Export
+            <FileDownloadOutlinedIcon style={{color: 'white', fontSize: '20px'}} />
+          </button>
+        </div>
         <div style={{ height: 'calc(100vh - 75px)', overflow: 'auto', display: 'flex', gap: '20px' }}>
           <Paper sx={{ width: 1008, height: '99%' }}>
             <DataGrid

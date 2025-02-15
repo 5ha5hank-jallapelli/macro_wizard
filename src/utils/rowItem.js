@@ -32,11 +32,11 @@ export default function rowItem(items) {
     items.map((row) => (
       <TableRow key={row.id} sx={{display: items.length ? 'table-row' : 'none', width: '100%'}}>
         <TableCell sx={tableCellStyling} component="th" scope="row">{row.item}</TableCell>
-        <TableCell sx={tableCellStyling} align="center">{row.quantity}</TableCell>
-        <TableCell sx={tableCellStyling} align="center">{row.carbohydrates}</TableCell>
-        <TableCell sx={tableCellStyling} align="center">{row.proteins}</TableCell>
-        <TableCell sx={tableCellStyling} align="center">{row.fats}</TableCell>
-        <TableCell sx={tableCellStyling} align="center">{row.energy}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.quantity}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.carbohydrates}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.proteins}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.fats}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.energy}</TableCell>
         <TableCell className='btn-copy-cell' sx={tableCellStyling} align="center">
           <button className='btn-copy' type='button' style={buttonStyling} onClick={() => handleRowCopy(row)}><CopyAllOutlinedIcon /></button>
         </TableCell>

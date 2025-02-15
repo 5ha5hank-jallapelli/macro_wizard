@@ -20,6 +20,7 @@ function SelectedItemsTable({ selectedRows }) {
   const [dairyItems, setDairyItems] = useState([])
 
   const tableStyling = { minWidth: 816, width: 'fit-content', boxShadow: 'none', border: '1px solid rgba(0,0,0,0.1)' }
+  const getCategoryItems = category => selectedRows.filter(item => item.category === category)
 
   useEffect(() => {
     setCerealItems(getCategoryItems('Cereals'));
@@ -33,13 +34,11 @@ function SelectedItemsTable({ selectedRows }) {
     setDairyItems(getCategoryItems('Milk and Milk Products'))
   }, [selectedRows])
 
-  const getCategoryItems = category => selectedRows.filter(item => item.category === category)
-
   return (
     <div>
-      <TableContainer component={Paper} sx={{width: 'fit-content', maxHeight: 'calc(100vh - 125px)', height: 'auto'}}>
-        <Table stickyHeader sx={tableStyling} aria-label="selectedItemsTable">
-          <TableHeader/>
+      <TableContainer component={Paper} sx={{width: 'fit-content', maxHeight: 'calc(100vh - 127px)', height: 'auto', position: 'relative'}}>
+        <Table id='selectedItems' stickyHeader sx={tableStyling} aria-label="selectedItemsTable">
+          <TableHeader selectedRows={selectedRows}/>
           <TableBody sx={{ display: selectedRows.length ? 'table-row-group' : 'none', width: '100%' }}>
             <RowItemWithCategory label={'Cereals'} items={cerealItems} />
             <RowItemWithCategory label={'Pulses'} items={pulsesItems} />
@@ -50,10 +49,10 @@ function SelectedItemsTable({ selectedRows }) {
             <RowItemWithCategory label={'Mushrooms'} items={mushroomItems} />
             <RowItemWithCategory label={'Fruits'} items={fruitItems} />
             <RowItemWithCategory label={'Milk & Milk Products'} items={dairyItems} />
+            <TotalMacros selectedItems={selectedRows} />
           </TableBody>
         </Table>
       </TableContainer>
-      <TotalMacros selectedItems={selectedRows} />
       <EmptyTableState selectedItems={selectedRows} />
     </div>
   )

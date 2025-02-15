@@ -1,14 +1,9 @@
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import CopyAllOutlinedIcon from '@mui/icons-material/CopyAllOutlined';
 import { Slide, toast } from 'react-toastify';
 
 export default function TotalMacros({ selectedItems }) {
-
   const tableCellStyling = { padding: '5px 10px', height: "36px", fontWeight: '600' };
   const buttonStyling = { all: 'unset', cursor: 'pointer' }
 
@@ -38,28 +33,17 @@ export default function TotalMacros({ selectedItems }) {
       console.log(error.message)
     }
   }
-
   return (
-    <>
-      <div style={{ display: selectedItems.length ? `block` : 'none'}}>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableBody>
-            <TableRow sx={{backgroundColor: 'gold', fontWeight: '600'}}>
-              <TableCell sx={tableCellStyling} component="th" scope="row" width={253}>Total</TableCell>
-              <TableCell sx={tableCellStyling} align='center' width={82}>{ getTotalMacroQuantity('quantity') }</TableCell>
-              <TableCell sx={tableCellStyling} align='center' width={151}>{ getTotalMacroQuantity('carbohydrates') }</TableCell>
-              <TableCell sx={tableCellStyling} align='center' width={102}>{ getTotalMacroQuantity('proteins') }</TableCell>
-              <TableCell sx={tableCellStyling} align='center' width={62}>{ getTotalMacroQuantity('fats') }</TableCell>
-              <TableCell sx={tableCellStyling} align='center' width={82}>{ getTotalMacroQuantity('energy') }</TableCell>
-              <TableCell className='total-macros-cell' sx={tableCellStyling} align='center' width={82}>
-                <button type='button' style={buttonStyling} disabled={ selectedItems.length == 0 } onClick={() => handleCopyTotal()}><CopyAllOutlinedIcon /></button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </div>
-    </>
+    <TableRow sx={{backgroundColor: 'gold', fontWeight: '600', display: selectedItems.length ? `table-row` : 'none', position: 'fixed', bottom: '18px'}}>
+      <TableCell className='total-cell' sx={tableCellStyling} component="th" scope="row" width={253}><b>Total</b></TableCell>
+      <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={82}><b>{ getTotalMacroQuantity('quantity') }</b></TableCell>
+      <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={151}><b>{ getTotalMacroQuantity('carbohydrates') }</b></TableCell>
+      <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={102}>{ getTotalMacroQuantity('proteins') }</TableCell>
+      <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={62}>{ getTotalMacroQuantity('fats') }</TableCell>
+      <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={82}>{ getTotalMacroQuantity('energy') }</TableCell>
+      <TableCell className='total-macros-cell' sx={tableCellStyling} align='center' width={82}>
+        <button type='button' style={buttonStyling} disabled={ selectedItems.length == 0 } onClick={() => handleCopyTotal()}><CopyAllOutlinedIcon /></button>
+      </TableCell>
+    </TableRow>
   )
 }
