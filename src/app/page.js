@@ -3,7 +3,7 @@
 import Paper from '@mui/material/Paper';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import SelectedItemsTable from './components/SelectedItemsTable';
-import MacroCalculator from './components/MacroCalculator';
+import CalculatorPane from './components/CalculatorPane';
 import tableExport from '@/utils/tableExport';
 import { useEffect, useState } from "react";
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -59,9 +59,9 @@ export default function Home() {
 
   return (
     <>
-      <MacroCalculator/>
+      <CalculatorPane />
       <div style={{ width: '1862px', overflow: 'auto', marginInline: 'auto'}}>
-        <div style={{ height: '38px', marginBottom: '10px', display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ height: '38px', marginBottom: '10px', display: 'flex', paddingRight: '18px', justifyContent: 'flex-end' }}>
           <button
             type='button'
             title='Export Data'

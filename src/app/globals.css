@@ -108,3 +108,12 @@ input {
 .fw-bold {
   font-weight: 700 !important;
 }
+
+button.Mui-selected {
+  color: #1447E6 !important;
+  border-bottom-color: #1447E6 !important;
+}
+
+span.Mui-checked {
+  color: #1447E6 !important;
+}
