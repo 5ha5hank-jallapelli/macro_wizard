@@ -34,7 +34,7 @@ export default function TotalMacros({ selectedItems }) {
     }
   }
   return (
-    <TableRow sx={{backgroundColor: 'gold', fontWeight: '600', display: selectedItems.length ? `table-row` : 'none', position: 'fixed', bottom: '18px'}}>
+    <TableRow sx={{backgroundColor: 'gold', fontWeight: '600', display: selectedItems.length ? `table-row` : 'none'}}>
       <TableCell className='total-cell' sx={tableCellStyling} component="th" scope="row" width={253}><b>Total</b></TableCell>
       <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={82}><b>{ getTotalMacroQuantity('quantity') }</b></TableCell>
       <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={151}><b>{ getTotalMacroQuantity('carbohydrates') }</b></TableCell>
