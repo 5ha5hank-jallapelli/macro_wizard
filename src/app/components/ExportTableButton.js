@@ -2,6 +2,7 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import * as XLSX from 'xlsx-js-style'
 import { saveAs } from 'file-saver'
 import { useVitals } from '@/app/context/VitalsContext';
+import { border, color } from '@mui/system';
 
 export default function ExportTableButton({ selectedItems }) {
   const { vitals } = useVitals()
@@ -11,38 +12,42 @@ export default function ExportTableButton({ selectedItems }) {
       const workbook = XLSX.utils.book_new();
       const worksheet = XLSX.utils.table_to_sheet(table)
 
-      let data = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
-
-      const metaData = [
-        ["", ""],
-        ["Name", ""],
-        ["Age", `${vitals.age} years`],
-        ["Weight", `${vitals.weight} kgs`],
-        ["Height", `${vitals.height} cms`],
-        ["BMI", `${vitals.bmi} kg/m2`],
-        ["BMR", `${vitals.bmr} cals/day`],
-        ["", ""],
-        ["", ""]
-      ];
-
-      data = [...metaData, ...data ];
-
-      const newData = XLSX.utils.aoa_to_sheet(data)
+      XLSX.utils.sheet_to_json(worksheet, { header: 1 })
 
       worksheet["!ref"] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: 500, c: 500 } });
 
       const bold = {font: { bold: true }}
       const hCenter = {alignment: { horizontal: 'center'}}
-      const borderRight = {right: {style: 'hair', color: 'dcdcdc'}}
+      const hStart = { alignment: { horizontal: 'left'}}
+      const allBorders = {
+        border: {
+          top: {
+            style: 'thin',
+            color: '#000'
+          },
+          right: {
+            style: 'thin',
+            color: '#000'
+          },
+          bottom: {
+            style: 'thin',
+            color: '#000'
+          },
+          left: {
+            style: 'thin',
+            color: '#000'
+          }
+        }}
 
       worksheet["!cols"] = [
-          { wch: 30 },
-          { wch: 10 },
-          { wch: 15 },
-          { wch: 10 },
-          { wch: 10 },
-          { wch: 10 },
+        { wch: 30 },
+        { wch: 10 },
+        { wch: 15 },
+        { wch: 10 },
+        { wch: 10 },
+        { wch: 10 },
       ]
+
       const range = XLSX.utils.decode_range(worksheet["!ref"]);
 
       for (let R = range.s.r; R <= range.e.c; ++R) {
@@ -51,6 +56,9 @@ export default function ExportTableButton({ selectedItems }) {
         const cell = worksheet[cell_addr]
         if (cell) {
             const cellElement = table.rows[R].cells[C]
+            // if (cellElement.classList.contains("cell-body") && cell.v === '') {
+            //   cell.v = 0
+            // }
             if (cellElement.classList.contains("fw-bold")) {
               cell.s = {...bold}
             }
@@ -58,10 +66,37 @@ export default function ExportTableButton({ selectedItems }) {
             cell.s = {...bold,...hCenter}
             }
             if (cellElement.classList.contains("total-cell")) {
-              cell.s = { ...bold, ...borderRight, fill: {fgColor:{ rgb: "ffd700" }}}
+              cell.s = { 
+              ...bold, 
+              fill: {fgColor:{ rgb: "ffd700"}},
+            }
             }
             if (cellElement.classList.contains("total-item-cell")) {
-              cell.s = { ...bold, ...borderRight, ...hCenter, fill: {fgColor:{ rgb: "ffd700" }}}
+              cell.s = {
+                ...bold, 
+                ...hCenter, 
+                fill: {fgColor:{ rgb: "ffd700"}},
+              }
+            }
+            if (cellElement.classList.contains("reference-cell")) {
+              cell.s = { 
+              ...bold, 
+              fill: {fgColor:{ rgb: "afeeee"}},
+            }
+            }
+            if (cellElement.classList.contains("reference-item-cell")) {
+              cell.s = {
+                ...bold, 
+                ...hCenter, 
+                fill: {fgColor:{ rgb: "afeeee"}},
+              }
+            }
+            if (cellElement.classList.contains("meta-data-cell")) {
+              cell.s = {
+                ...bold,
+                ...hStart,
+                fill: {fgColor:{ rgb: "afeeee"}},
+              }
             }
             if (cellElement.classList.contains("cell-body")) {
               cell.s = {...hCenter}
@@ -93,11 +128,14 @@ export default function ExportTableButton({ selectedItems }) {
             if (cellElement.classList.contains("milk-&-milk-products")) {
             cell.s = {...bold, fill: { fgColor: { rgb: 'F0F8FF'}}}
             }
+            if (cellElement.classList.contains("h-start")) {
+              cell.s = {...hStart}
+            }
+            cell.s = {...cell.s, ...allBorders}
           }
         }
       }
-
-      XLSX.utils.book_append_sheet(workbook, newData, "Sheet 1")
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1")
 
       const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
       const blob = new Blob([wbout], { type: 'application/vnd.ms-excel' });

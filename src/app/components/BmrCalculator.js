@@ -8,50 +8,30 @@ import FormLabel from '@mui/material/FormLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { useVitals } from '../context/VitalsContext';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 
 export default function BmrCalculator() {
 	const [gender, setGender] = useState('male')
-  const [age, setAge] = useState(0)
-  const [weight, setWeight] = useState(0)
-  const [height, setHeight] = useState(0)
-  const [bmi, setBmi] = useState(0)
-	const [bmr, setBmr] = useState(0)
-	const { setVitals } = useVitals();
-
-	useEffect(() => {
-		setVitals({
-			age: age,
-			weight: weight,
-			height: height,
-			bmi: bmi,
-			bmr: bmr
-		})
-	}, [bmi])
+	const { vitals, setVitals } = useVitals();
 
 	const calculateBmrBmi = () => {
-    const heightInMtr = height/100;
+		const heightInMtr = vitals.height/100;
 
-    const bm = (weight/(heightInMtr*heightInMtr)).toFixed(2);
-    setBmi(bm)
+		const bm = (vitals.weight/(heightInMtr*heightInMtr)).toFixed(2);
+		setVitals(prevState => ({...prevState, bmi: bm}))
 
-    if (gender === 'male') {
-      const br = (10*(weight)+6.25*(height)-5*(age) + 5).toFixed(2);
-      setBmr(br)
-    } else if (gender === 'female') {
-      const br = (10*(weight)+6.25*(height)-5*(age) - 161).toFixed(2);
-      setBmr(br)
+		if (gender === 'male') {
+			const br = (10*(vitals.weight)+6.25*(vitals.height)-5*(vitals.age) + 5).toFixed(2);
+			setVitals(prevState => ({...prevState, bmr: br}))
+		} else if (gender === 'female') {
+			const br = (10*(vitals.weight)+6.25*(vitals.height)-5*(vitals.age) - 161).toFixed(2);
+			setVitals(prevState => ({...prevState, bmr: br}))
 		}
-  }
+	}
 
 	const handleReset = () => {
 		setGender('male')
-		setWeight(0)
-		setHeight(0)
-		setAge(0)
-		setBmr(0)
-		setBmi(0)
 	}
 
 	return (
@@ -73,8 +53,8 @@ export default function BmrCalculator() {
 					<FormLabel htmlFor='outlined-adornment-age' style={{ color: 'black', marginBottom: '5px'}}>Age</FormLabel>
 					<OutlinedInput
 						id="outlined-adornment-age"
-						value={age}
-						onChange={(event) => {setAge(event.target.value)}}
+						value={vitals.age}
+						onChange={(event) => setVitals(prevState => ({...prevState, age: event.target.value }))}
 						endAdornment={<InputAdornment position="end">years</InputAdornment>}
 						aria-describedby="outlined-age-helper-text"
 						inputProps={{
@@ -85,8 +65,8 @@ export default function BmrCalculator() {
 					<FormLabel htmlFor='outlined-adornment-weight' style={{ color: 'black', marginBottom: '5px'}}>Weight</FormLabel>
 					<OutlinedInput
 						id="outlined-adornment-weight"
-						value={weight}
-						onChange={(event) => {setWeight(event.target.value)}}
+						value={vitals.weight}
+						onChange={(event) => setVitals(prevState => ({...prevState, weight: event.target.value }))}
 						endAdornment={<InputAdornment position="end">kgs</InputAdornment>}
 						aria-describedby="outlined-weight-helper-text"
 						inputProps={{
@@ -97,8 +77,8 @@ export default function BmrCalculator() {
 					<FormLabel htmlFor='outlined-adornment-height' style={{ color: 'black', marginBottom: '5px'}}>Height</FormLabel>
 					<OutlinedInput
 						id="outlined-adornment-height"
-						value={height}
-						onChange={(event) => {setHeight(event.target.value)}}
+						value={vitals.height}
+						onChange={(event) => setVitals(prevState => ({...prevState, height: event.target.value }))}
 						endAdornment={<InputAdornment position="end">cms</InputAdornment>}
 						aria-describedby="outlined-height-helper-text"
 						inputProps={{
@@ -107,20 +87,22 @@ export default function BmrCalculator() {
 				</FormControl>
 			</div>
 			<div style={{marginTop: '20px', display: 'flex', gap: '20px', alignItems: 'center'}}>
-				<button type='button' style={{color: '#ffffff', backgroundColor: '#1447E6', borderRadius: '6px', padding: '5px 10px', border: 'none'}} onClick={() => calculateBmrBmi()}>Calculate</button>
+				<button type='button' style={{color: '#ffffff', backgroundColor: '#1447E6', borderRadius: '6px', padding: '5px 10px', border: 'none'}} onClick={() => calculateBmrBmi()}>
+					Calculate
+				</button>
 				<button type='button' onClick={() => handleReset()}
-          style={{
-            all: 'unset',
-            color: '#1447E6',
-            textDecoration: 'underline',
-            textUnderlineOffset: '4px',
-            cursor: 'pointer'
-          }}>Reset</button>
+				style={{
+					all: 'unset',
+					color: '#1447E6',
+					textDecoration: 'underline',
+					textUnderlineOffset: '4px',
+					cursor: 'pointer'
+				}}>Reset</button>
 			</div>
 			<div style={{backgroundColor: 'rgba(0,0,0,0.2)', height: '1px', marginBlock: '25px 20px'}}></div>
 			<div>
-				<div style={{marginBottom: '5px'}}><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMI: <span style={{fontWeight: '600'}}>{bmi || 0}</span> kg/m<sup>2</sup></h3></div>
-				<div><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMR: <span style={{fontWeight: '600'}}>{bmr || 0}</span> cals/day</h3></div>
+				<div style={{marginBottom: '5px'}}><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMI: <span style={{fontWeight: '600'}}>{vitals.bmi || 0}</span> kg/m<sup>2</sup></h3></div>
+				<div><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMR: <span style={{fontWeight: '600'}}>{vitals.bmr || 0}</span> cals/day</h3></div>
 			</div>
 		</>
 	)

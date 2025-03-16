@@ -49,15 +49,13 @@ export default function TotalMacros({ selectedItems }) {
         </TableCell>
       </TableRow>
       <TableRow sx={{backgroundColor: 'white', fontWeight: '600', position: 'sticky', bottom: '0', display: selectedItems.length ? `table-row` : 'none'}}>
-        <TableCell className='total-cell' sx={tableCellStyling} component="th" scope="row" width={253}><b>Reference</b></TableCell>
-        <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={82}><b>--</b></TableCell>
-        <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={151}><b>{ macro.carbohydrates }</b></TableCell>
-        <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={102}>{ macro.proteins }</TableCell>
-        <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={62}>{ macro.fats }</TableCell>
-        <TableCell className='total-item-cell' sx={tableCellStyling} align='center' width={82}>{ macro.totalCalories }</TableCell>
-        <TableCell className='total-macros-cell' sx={tableCellStyling} align='center' width={82}>
-          --
-        </TableCell>
+        <TableCell className='reference-cell' sx={tableCellStyling} component="th" scope="row" width={253}><b>Reference</b></TableCell>
+        <TableCell className='reference-item-cell' sx={tableCellStyling} align='center' width={82}><b>--</b></TableCell>
+        <TableCell className='reference-item-cell' sx={tableCellStyling} align='center' width={151}><b>{ macro.carbohydrates }</b></TableCell>
+        <TableCell className='reference-item-cell' sx={tableCellStyling} align='center' width={102}>{ macro.proteins }</TableCell>
+        <TableCell className='reference-item-cell' sx={tableCellStyling} align='center' width={62}>{ macro.fats }</TableCell>
+        <TableCell className='reference-item-cell' sx={tableCellStyling} align='center' width={82}>{ macro.totalCalories }</TableCell>
+        <TableCell className='reference-macros-cell' sx={tableCellStyling} align='center' width={82}></TableCell>
       </TableRow>
     </>
   )

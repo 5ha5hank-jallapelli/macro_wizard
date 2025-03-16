@@ -33,7 +33,7 @@ export default function rowItem(items) {
       <TableRow key={row.id} sx={{display: items.length ? 'table-row' : 'none', width: '100%'}}>
         <TableCell sx={tableCellStyling} component="th" scope="row">{row.item}</TableCell>
         <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.quantity}</TableCell>
-        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.carbohydrates}</TableCell>
+        <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.carbohydrates ? row.carbohydrates : 0}</TableCell>
         <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.proteins}</TableCell>
         <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.fats}</TableCell>
         <TableCell className='cell-body' sx={tableCellStyling} align="center">{row.energy}</TableCell>
