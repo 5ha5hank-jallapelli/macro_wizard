@@ -71,7 +71,7 @@ button:disabled {
   left: 0;
   top: 0;
   height: 100vh;
-  width: 320px;
+  width: 350px;
   background-color: white;
   z-index: 20;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -117,4 +117,8 @@ button.Mui-selected {
 
 span.Mui-checked {
   color: #1447E6 !important;
+}
+
+.MuiInputAdornment-root p {
+  font-size: 12px !important;
 }

@@ -1,104 +1,98 @@
 'use client'
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 import { useState, useEffect } from "react";
+import { carbohydrates, proteins, fats } from '@/utils/macros';
+import { useMacro } from '../context/MacrosContext';
+
+import Carbohydrates from './Carbohydrates';
+import Proteins from './Proteins';
+import Fats from './Fats';
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export default function MacroCalculator() {
-  const [selectedMacro, setSelectedMacro] = useState('carbohydrates')
-  const [defaultCalories, setDefaultCalories] = useState(0)
-  const [defaultMacroPercent, setDefaultMacroPercent] = useState(0)
-  const [macroValue, setMacroValue] = useState(0)
-  const [calories, setCalories] = useState(0)
-  const [serving, setServing] = useState(0)
-
-  const macros = [{'carbohydrates': 4}, {'protein': 4}, {'fats': 9}]
+  const [tabIndex, setTabIndex] = useState(0)
+  const { macro, setMacro } = useMacro()
 
   useEffect(() => {
-    calculate();
-    const selectedMacroValue = macros.find(m => m[selectedMacro])[selectedMacro]
-    setMacroValue(selectedMacroValue)
+    const c = carbohydrates(macro.totalCalories, macro.carbohydrates_percentage)
+    const p = proteins(macro.totalCalories, macro.proteins_percentage)
+    const f = fats(macro.totalCalories, macro.fats_percentage)
 
-  }, [defaultCalories, defaultMacroPercent, selectedMacro, macroValue])
+    setMacro(prevState => ({
+      ...prevState,
+      carbohydrates: c.serving,
+      proteins: p.serving,
+      fats: f.serving,
+      totalCalories: macro.totalCalories
+    }))
+  }, [macro.totalCalories])
 
-  const calculate = () => {
-    const c = (defaultCalories / (100 / defaultMacroPercent)).toFixed(2)
-    const s = (c/macroValue).toFixed(2)
-
-    setCalories(c)
-    setServing(s)
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
   }
 
   return (
     <>
-      <div style={{ marginBlock: '20px'}}>
-        <FormControl sx={{marginBottom: '15px'}}>
-        <FormLabel htmlFor='row-radio-buttons-group' style={{ color: 'black', marginBottom: '5px'}}>Select Macro</FormLabel>
-          <RadioGroup
-            row
-            aria-labelledby="row-radio-buttons-group-label"
-            value={selectedMacro}
-            onChange={event => setSelectedMacro(event.target.value)}
-            name="row-radio-buttons-group">
-            <FormControlLabel style={{ fontSize: '15px !important' }} value='carbohydrates' control={<Radio />} label="Carbohydrates" />
-            <FormControlLabel style={{ fontSize: '15px !important' }} value='protein' control={<Radio />} label="Protein" />
-            <FormControlLabel style={{ fontSize: '15px !important' }} value='fats' control={<Radio />} label="Fats" />
-          </RadioGroup>
-        </FormControl>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0'}}>
-          <FormLabel htmlFor='outlined-adornment-calories' style={{ color: 'black', marginBottom: '5px'}}>Enter Calories</FormLabel>
+      <Box sx={{ width: '100%', marginTop: '10px' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={tabIndex} onChange={handleTabChange} aria-label="Macro">
+            <Tab label="Carbohydrates" {...a11yProps(0)} sx={{flexGrow: 1, fontSize: '12px', textTransform: 'capitalize', color: 'black'}} />
+            <Tab label="Proteins" {...a11yProps(1)} sx={{ flexGrow: 1, fontSize: '12px', textTransform: 'capitalize', color: 'black' }} />
+            <Tab label="Fats" {...a11yProps(2)} sx={{flexGrow: 1, fontSize: '12px', textTransform: 'capitalize', color: 'black'}} />
+          </Tabs>
+        </Box>
+        <FormControl variant="outlined" style={{margin: '0', marginBlock: '20px'}}>
+          <FormLabel htmlFor='outlined-adornment-carbs-percent' style={{ color: 'black', marginBottom: '5px'}}>Calories</FormLabel>
           <OutlinedInput
             id="outlined-adornment-calories"
-            value={defaultCalories}
-            onChange={(event) => {setDefaultCalories(event.target.value)}}
-            endAdornment={<InputAdornment position="end">cal</InputAdornment>}
+            value={macro.totalCalories}
+            onChange={(e) => setMacro(prevState => ({...prevState, totalCalories: e.target.value}))}
+            endAdornment={<InputAdornment position="end">cals</InputAdornment>}
             aria-describedby="outlined-calories-helper-text"
             inputProps={{
-              'aria-label': 'calories',
+              'aria-label': 'calories percent',
             }}
           />
         </FormControl>
-      </div>
-      <div style={{ marginBlock: '20px'}}>
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0'}}>
-          <FormLabel htmlFor='outlined-adornment-macro-percent' style={{ color: 'black', marginBottom: '5px'}}>Enter Macro Percent</FormLabel>
-          <OutlinedInput
-            id="outlined-adornment-macro-percent"
-            value={defaultMacroPercent}
-            onChange={(event) => {setDefaultMacroPercent(event.target.value)}}
-            endAdornment={<InputAdornment position="end">%</InputAdornment>}
-            aria-describedby="outlined-macro-percent-helper-text"
-            inputProps={{
-              'aria-label': 'macro percent',
-            }}
-          />
-        </FormControl>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', paddingTop: '15px', borderTop: '1px solid rgba(0,0,0,0.2)' }}>
-        <h3 style={{fontWeight: 500, paddingRight: '15px'}}>{calories}<small>&nbsp;cals</small></h3>|
-        <h3 style={{fontWeight: 500, paddingInline: '15px'}}>{serving}<small>&nbsp;gms</small></h3>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', paddingTop: '20px' }}>
-        <button
-          type='button'
-          onClick={() => {
-            setDefaultCalories(0);
-            setDefaultMacroPercent(0);
-            setSelectedMacro('carbohydrates')
-          }}
-          style={{
-            all: 'unset',
-            color: '#1447E6',
-            textDecoration: 'underline',
-            textUnderlineOffset: '4px',
-            cursor: 'pointer'
-          }}>Reset</button>
-      </div>
+        <CustomTabPanel value={tabIndex} index={0}>
+          <Carbohydrates />
+        </CustomTabPanel>
+        <CustomTabPanel value={tabIndex} index={1}>
+          <Proteins />
+        </CustomTabPanel>
+        <CustomTabPanel value={tabIndex} index={2}>
+          <Fats />
+        </CustomTabPanel>
+      </Box>
     </>
   )
 }

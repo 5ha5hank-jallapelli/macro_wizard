@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useVitals } from '../context/VitalsContext';
 import { useState, useEffect } from "react";
 
 
@@ -16,21 +17,32 @@ export default function BmrCalculator() {
   const [weight, setWeight] = useState(0)
   const [height, setHeight] = useState(0)
   const [bmi, setBmi] = useState(0)
-  const [bmr, setBmr] = useState(0)
+	const [bmr, setBmr] = useState(0)
+	const { setVitals } = useVitals();
+
+	useEffect(() => {
+		setVitals({
+			age: age,
+			weight: weight,
+			height: height,
+			bmi: bmi,
+			bmr: bmr
+		})
+	}, [bmi])
 
 	const calculateBmrBmi = () => {
     const heightInMtr = height/100;
-    
-    const bm = weight/(heightInMtr*heightInMtr);
+
+    const bm = (weight/(heightInMtr*heightInMtr)).toFixed(2);
     setBmi(bm)
 
     if (gender === 'male') {
-      const br = 10*(weight)+6.25*(height)-5*(age) + 5;
+      const br = (10*(weight)+6.25*(height)-5*(age) + 5).toFixed(2);
       setBmr(br)
     } else if (gender === 'female') {
-      const br = 10*(weight)+6.25*(height)-5*(age) - 161;
+      const br = (10*(weight)+6.25*(height)-5*(age) - 161).toFixed(2);
       setBmr(br)
-    }
+		}
   }
 
 	const handleReset = () => {
@@ -107,8 +119,8 @@ export default function BmrCalculator() {
 			</div>
 			<div style={{backgroundColor: 'rgba(0,0,0,0.2)', height: '1px', marginBlock: '25px 20px'}}></div>
 			<div>
-				<div style={{marginBottom: '5px'}}><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMI: <span style={{fontWeight: '600'}}>{bmi.toFixed(2) || 0}</span> kg/m<sup>2</sup></h3></div>
-				<div><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMR: <span style={{fontWeight: '600'}}>{bmr.toFixed(2) || 0}</span> cals/day</h3></div>
+				<div style={{marginBottom: '5px'}}><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMI: <span style={{fontWeight: '600'}}>{bmi || 0}</span> kg/m<sup>2</sup></h3></div>
+				<div><h3 style={{fontWeight: '450', fontSize: '17px'}}>BMR: <span style={{fontWeight: '600'}}>{bmr || 0}</span> cals/day</h3></div>
 			</div>
 		</>
 	)

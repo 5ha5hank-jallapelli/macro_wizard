@@ -36,7 +36,7 @@ function SelectedItemsTable({ selectedRows }) {
 
   return (
     <div>
-      <TableContainer component={Paper} sx={{width: 'fit-content', maxHeight: 'calc(100vh - 127px)', height: 'auto', position: 'relative'}}>
+      <TableContainer component={Paper} sx={{width: 'fit-content', maxHeight: 'calc(100vh - 88px)', height: 'auto', position: 'relative'}}>
         <Table id='selectedItems' stickyHeader sx={tableStyling} aria-label="selectedItemsTable">
           <TableHeader selectedRows={selectedRows}/>
           <TableBody sx={{ display: selectedRows.length ? 'table-row-group' : 'none', width: '100%' }}>

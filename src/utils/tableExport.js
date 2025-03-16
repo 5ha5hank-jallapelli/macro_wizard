@@ -1,10 +1,24 @@
 import * as XLSX from 'xlsx-js-style'
 import { saveAs } from 'file-saver'
+import { useVitals } from '@/app/context/VitalsContext';
 
 export default function tableExport() {
 	const table = document.getElementById('selectedItems');
 	const workbook = XLSX.utils.book_new();
 	const worksheet = XLSX.utils.table_to_sheet(table)
+
+	let data = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
+
+	const metaData = [
+		["", ""],
+		["Name", "Shashank"],
+		["Age", "31"]
+	];
+
+	data = [...data, ...metaData];
+
+	const newData = XLSX.utils.aoa_to_sheet(data)
+
 	worksheet["!ref"] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: 500, c: 500 } });
 
 	const bold = {font: { bold: true }}
@@ -27,7 +41,6 @@ export default function tableExport() {
 		const cell = worksheet[cell_addr]
 		if (cell) {
 				const cellElement = table.rows[R].cells[C]
-				
 				if (cellElement.classList.contains("fw-bold")) {
 					cell.s = {...bold}
 				}
@@ -73,7 +86,9 @@ export default function tableExport() {
 			}
 		}
 	}
-	XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet 1")
+
+	XLSX.utils.book_append_sheet(workbook, newData, "Sheet 1")
+
 	const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
 	const blob = new Blob([wbout], { type: 'application/vnd.ms-excel' });
 	saveAs(blob, 'plan.xlsx');
