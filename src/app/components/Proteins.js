@@ -13,14 +13,14 @@ export default function Proteins() {
     const p = proteins(macro.totalCalories, macro.proteins_percentage)
 
     setMacro(prevState => {
-      return {...prevState, proteins: p.serving }
+      return {...prevState, proteins: p.serving, proteins_serving_calories: p.calories }
     })
   },[macro.proteins_percentage, macro.totalCalories])
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0'}}>
-        <FormLabel htmlFor='outlined-adornment-proteins-percent' style={{ color: 'black', marginBottom: '5px'}}>Proteins in %</FormLabel>
+      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0', width: '100%'}}>
+        <FormLabel htmlFor='outlined-adornment-proteins-percent' style={{ color: 'black', marginBottom: '5px'}}>Protein in %</FormLabel>
         <OutlinedInput
           id="outlined-adornment-proteins-percent"
           value={macro.proteins_percentage}
@@ -32,9 +32,6 @@ export default function Proteins() {
           }}
         />
       </FormControl>
-      <div style={{ marginTop: '20px' }}>
-        Protein Serving: { macro.proteins }
-      </div>
     </>
   )
 }

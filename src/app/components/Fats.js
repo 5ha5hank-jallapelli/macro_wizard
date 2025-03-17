@@ -12,13 +12,13 @@ export default function Fats() {
   useEffect(() => {
     const f = fats(macro.totalCalories, macro.fats_percentage)
     setMacro(prevState => {
-      return {...prevState, fats: f.serving }
+      return {...prevState, fats: f.serving, fats_serving_calories: f.calories }
     })
   }, [macro.fats_percentage, macro.totalCalories])
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0'}}>
+      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0', width: '100%'}}>
         <FormLabel htmlFor='outlined-adornment-fats-percent' style={{ color: 'black', marginBottom: '5px'}}>Fats in %</FormLabel>
         <OutlinedInput
           id="outlined-adornment-fats-percent"
@@ -31,9 +31,6 @@ export default function Fats() {
           }}
         />
       </FormControl>
-      <div style={{ marginTop: '20px' }}>
-        Fats Serving: { macro.fats }
-      </div>
     </>
   )
 }

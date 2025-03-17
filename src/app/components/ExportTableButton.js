@@ -66,28 +66,28 @@ export default function ExportTableButton({ selectedItems }) {
             cell.s = {...bold,...hCenter}
             }
             if (cellElement.classList.contains("total-cell")) {
-              cell.s = { 
-              ...bold, 
+              cell.s = {
+              ...bold,
               fill: {fgColor:{ rgb: "ffd700"}},
             }
             }
             if (cellElement.classList.contains("total-item-cell")) {
               cell.s = {
-                ...bold, 
-                ...hCenter, 
+                ...bold,
+                ...hCenter,
                 fill: {fgColor:{ rgb: "ffd700"}},
               }
             }
             if (cellElement.classList.contains("reference-cell")) {
-              cell.s = { 
-              ...bold, 
+              cell.s = {
+              ...bold,
               fill: {fgColor:{ rgb: "afeeee"}},
             }
             }
             if (cellElement.classList.contains("reference-item-cell")) {
               cell.s = {
-                ...bold, 
-                ...hCenter, 
+                ...bold,
+                ...hCenter,
                 fill: {fgColor:{ rgb: "afeeee"}},
               }
             }
@@ -150,6 +150,7 @@ export default function ExportTableButton({ selectedItems }) {
         display: 'flex',
         alignItems: 'center',
         gap: '5px',
+        transform: 'translateY(4px)',
         backgroundColor: '#10793F',
         color: 'white',
         padding: '1px 10px',

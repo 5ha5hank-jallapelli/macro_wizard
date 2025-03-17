@@ -6,6 +6,7 @@ const VitalsContext = createContext();
 
 export function VitalsProvider({ children }) {
   const [vitals, setVitals] = useState({
+    gender: 'Male',
     age: 0,
     weight: 0,
     height: 0,

@@ -6,46 +6,7 @@ export default function VitalInfo() {
   const { vitals } = useVitals()
 
   return (
-    <div style={{display: 'flex', gap: '10px', maxWidth: '860px'}}>
-      <div style={{paddingTop: '5px', pointerEvents: 'none'}}>
-        <TextField
-          label="Age"
-          id="outlined-size-small"
-          defaultValue={vitals.age}
-          size="small"
-          slotProps={{
-            input: {
-              endAdornment: <InputAdornment>yrs</InputAdornment>,
-            },
-          }}
-        />
-      </div>
-      <div style={{paddingTop: '5px', pointerEvents: 'none'}}>
-        <TextField
-          label="Weight"
-          id="outlined-size-small"
-          defaultValue={vitals.weight}
-          size="small"
-          slotProps={{
-            input: {
-              endAdornment: <InputAdornment>kgs</InputAdornment>,
-            },
-          }}
-        />
-      </div>
-      <div style={{paddingTop: '5px', pointerEvents: 'none'}}>
-        <TextField
-          label="Height"
-          id="outlined-size-small"
-          defaultValue={vitals.height}
-          size="small"
-          slotProps={{
-            input: {
-              endAdornment: <InputAdornment>cms</InputAdornment>,
-            },
-          }}
-        />
-      </div>
+    <div style={{display: 'flex', gap: '10px', maxWidth: '325px', marginLeft: 'auto'}}>
       <div style={{paddingTop: '5px', pointerEvents: 'none'}}>
         <TextField
           label="BMI"

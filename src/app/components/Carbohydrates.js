@@ -13,18 +13,19 @@ export default function Carbohydrates() {
     const c = carbohydrates(macro.totalCalories, macro.carbohydrates_percentage)
 
     setMacro(prevState => {
-      return {...prevState, carbohydrates: c.serving }
+      return {...prevState, carbohydrates: c.serving, carbohydrates_serving_calories: c.calories }
     })
   },[macro.carbohydrates_percentage, macro.totalCalories])
 
   return (
     <>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{margin: '0'}}>
+      <FormControl sx={{ m: 1 }} variant="outlined" style={{margin: '0', width: '100%'}}>
         <FormLabel htmlFor='outlined-adornment-carbs-percent' style={{ color: 'black', marginBottom: '5px' }}>
           Carbohydrates in %
         </FormLabel>
         <OutlinedInput
           id="outlined-adornment-carbs-percent"
+          sx={{width: '100%'}}
           value={macro.carbohydrates_percentage}
           onChange={e => setMacro(prevState => ({...prevState, carbohydrates_percentage: e.target.value}))}
           endAdornment={<InputAdornment position="end">%</InputAdornment>}
@@ -34,9 +35,6 @@ export default function Carbohydrates() {
           }}
         />
       </FormControl>
-      <div style={{ marginTop: '20px' }}>
-        Carbs Serving: { macro.carbohydrates }
-      </div>
     </>
   )
 }

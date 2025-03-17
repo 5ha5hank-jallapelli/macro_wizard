@@ -55,7 +55,7 @@ export default function CalculatorPane() {
       <div className='calculator-pane' style={{ transform: showCalculatorPane ? 'translateX(0px)' : 'translateX(-100%)' }}>
         <div style={{ padding: '10px 15px', backgroundColor: '#1447E6', color: 'white', borderBottom: '1px solid rgba(0,0,0,0.2)', display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center'}}>
-            <h4 style={{ fontWeight: '400', margin: '0'}}>Calculator</h4>
+            <h4 style={{ fontWeight: '600', margin: '0'}}>Vitals & Macro Calculator</h4>
           </div>
           <button type="button"
             style={{ border: 'none', backgroundColor: 'unset', display: 'flex', alignItems: 'center' }}
@@ -63,12 +63,12 @@ export default function CalculatorPane() {
             <DisabledByDefaultIcon style={{ color: 'rgba(255,255,255,0.9)', strokeWidth: '1px', fontSize: '26px'}} />
           </button>
         </div>
-        <div style={{ padding: '15px'}}>
+        <div style={{ padding: '0px 15px 15px'}}>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={tabValue} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="BMI & BMR" {...a11yProps(0)} sx={{flexGrow: 1, textTransform: 'capitalize', fontSize: '16px', color: 'black'}} />
-              <Tab label="Macros" {...a11yProps(1)} sx={{flexGrow: 1, textTransform: 'capitalize', fontSize: '16px', color: 'black'}} />
+              <Tab label="Vitals" {...a11yProps(0)} sx={{flexGrow: 1, paddingBottom: '5px', textTransform: 'capitalize', fontSize: '16px', fontWeight: '550', color: 'black'}} />
+              <Tab label="Macros" {...a11yProps(1)} sx={{flexGrow: 1, paddingBottom: '5px', textTransform: 'capitalize', fontSize: '16px', fontWeight: '550', color: 'black'}} />
             </Tabs>
           </Box>
           <CustomTabPanel value={tabValue} index={0}>

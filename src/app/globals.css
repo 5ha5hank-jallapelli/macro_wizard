@@ -122,3 +122,7 @@ span.Mui-checked {
 .MuiInputAdornment-root p {
   font-size: 12px !important;
 }
+
+.calculator-pane * {
+  font-family: 'Geist Sans', sans-serif !important;
+}

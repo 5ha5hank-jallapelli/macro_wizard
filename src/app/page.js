@@ -62,7 +62,7 @@ export default function Home() {
     <>
       <CalculatorPane />
       <div style={{ width: '1862px', overflow: 'auto', marginInline: 'auto'}}>
-        <div style={{ height: '38px', marginBottom: '10px', display: 'flex', gap: '30px', paddingRight: '18px', justifyContent: 'space-between' }}>
+        <div style={{ height: '38px', marginBottom: '10px', display: 'flex', gap: '10px', paddingRight: '18px', justifyContent: 'space-between' }}>
           <VitalInfo />
           <ExportTableButton selectedItems={selectedRows} />
         </div>
