@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs';
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,6 +15,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const pm = Permanent_Marker({
+  variable: "--permanent-marker",
+  subsets: ["latin"],
+  weight: "400"
+})
+
 export const metadata = {
   title: "Macro Wizard | TanAahara",
   description: "Smart macro calculations at your fingertips.",
@@ -24,7 +30,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} ${pm.variable}`}>
           <VitalsProvider>
             <MacrosProvider>
               {children}

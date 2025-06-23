@@ -7,13 +7,14 @@ import CalculatorPane from './components/CalculatorPane';
 import ExportTableButton from './components/ExportTableButton';
 import { useEffect, useState, useContext } from "react";
 import VitalInfo from './components/VitalInfo';
-import { useCalculator } from './context/MacrosContext';
+import { useVitals } from './context/VitalsContext';
 
 
 export default function Home() {
   const [data, setData] = useState([])
   const [selectedRows, setSelectedRows] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const { vitals } = useVitals()
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/data`)
@@ -26,8 +27,7 @@ export default function Home() {
           setIsLoading(false)
         })
       })
-    }, []
-  )
+    }, [])
 
   const columns = [
     { field: 'item', headerName: 'Food Item', width: 253 },
