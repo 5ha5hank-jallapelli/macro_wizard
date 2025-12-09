@@ -66,27 +66,7 @@ export default function VitalInfo() {
 
   return (
     <>
-      <div className={`banner ${isPlaying ? 'playing' : 'paused'}`}
-        style={{ paddingBlock: "10px", position: 'fixed', inset: 'auto 0 0px', height: '100%', maxHeight: '100px' }}>
-        <p style={{textAlign: 'center', fontFamily: 'Permanent Marker'}}>0{ days } days until it's your Birthday!</p>
-      </div>
-      <audio controls src="/happy_birthday_song.mp3" style={{ transform: 'translateY(-500px)'}} />
-      <div className="confetti-wrapper">
-        {isPlaying ?
-        <Confetti
-          width={width}
-          height={height}
-          numberOfPieces={ 400 }
-        /> :
-        ""
-      }
-      </div>
       <div style={{ display: 'flex', gap: '10px', maxWidth: '445px', marginLeft: 'auto' }}>
-        <button type="button" className="birthday__btn"
-          style={{ marginLeft: "auto", marginBlock: "0", minWidth: "170px" }}
-          onClick={() => handleBirthdayCelebration()}>
-        Happy Birthday 🦄
-      </button>
       <div style={{paddingTop: '5px', pointerEvents: 'none'}}>
         <TextField
           label="BMI"

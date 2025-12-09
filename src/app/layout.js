@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono, Permanent_Marker } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs';
 import { ToastContainer, toast } from 'react-toastify';
 import { MacrosProvider } from "./context/MacrosContext";
 import { VitalsProvider } from "./context/VitalsContext";
@@ -28,17 +27,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} ${pm.variable}`}>
-          <VitalsProvider>
-            <MacrosProvider>
-              {children}
-            </MacrosProvider>
-          </VitalsProvider>
-          <ToastContainer />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} ${pm.variable}`}>
+        <VitalsProvider>
+          <MacrosProvider>
+            {children}
+          </MacrosProvider>
+        </VitalsProvider>
+        <ToastContainer />
+      </body>
+    </html>
   )
 }
